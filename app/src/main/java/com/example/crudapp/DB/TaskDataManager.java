@@ -39,6 +39,8 @@ public class TaskDataManager {
                 TaskContract.TaskEntry.COLUMN_DUE_DATE
         };
 
+        String sortOrder = TaskContract.TaskEntry.COLUMN_DUE_DATE + " ASC";  // Sort by due date in ascending order
+
         Cursor cursor = db.query(
                 TaskContract.TaskEntry.TABLE_NAME,
                 projection,
@@ -46,9 +48,10 @@ public class TaskDataManager {
                 null,
                 null,
                 null,
-                null);
+                sortOrder
+        );
 
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID));
             String title = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TITLE));
             String description = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DESCRIPTION));
@@ -59,6 +62,7 @@ public class TaskDataManager {
 
         return tasks;
     }
+
 
 
     public void deleteTask(int taskId) {
