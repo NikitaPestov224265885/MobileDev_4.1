@@ -17,6 +17,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
     private EditText etTitle, etDescription, etDueDate;
     private Button btnSaveTask;
     private TaskDataManager taskDataManager;
+    private int taskId = -1; // Default to -1, indicating add new task
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
         taskDataManager = new TaskDataManager(this);
 
-        int taskId = getIntent().getIntExtra("TASK_ID", -1);
+        // Do not redeclare taskId here; use the class member directly
+        taskId = getIntent().getIntExtra("TASK_ID", -1);
         if (taskId != -1) {
             // Retrieve the task details and populate the fields
             Task task = taskDataManager.getTask(taskId);
@@ -56,19 +59,41 @@ public class AddEditTaskActivity extends AppCompatActivity {
         });
     }
 
+
     private void saveTask() {
         String title = etTitle.getText().toString();
         String description = etDescription.getText().toString();
         String dueDate = etDueDate.getText().toString();
 
         if (!title.isEmpty() && !dueDate.isEmpty()) {
-            taskDataManager.insertTask(title, description, dueDate);
+            if (taskId == -1) {
+                // No task ID, so we're adding a new task
+                taskDataManager.insertTask(title, description, dueDate);
+            } else {
+                // We have a task ID, so we're updating an existing task
+                taskDataManager.updateTask(taskId, title, description, dueDate);
+            }
             finish();
         } else {
             etTitle.setError(title.isEmpty() ? "Title cannot be empty" : null);
             etDueDate.setError(dueDate.isEmpty() ? "Due date cannot be empty" : null);
+
         }
     }
+
+//    private void saveTask() {
+//        String title = etTitle.getText().toString();
+//        String description = etDescription.getText().toString();
+//        String dueDate = etDueDate.getText().toString();
+//
+//        if (!title.isEmpty() && !dueDate.isEmpty()) {
+//            taskDataManager.insertTask(title, description, dueDate);
+//            finish();
+//        } else {
+//            etTitle.setError(title.isEmpty() ? "Title cannot be empty" : null);
+//            etDueDate.setError(dueDate.isEmpty() ? "Due date cannot be empty" : null);
+//        }
+//    }
 
     private void showDatePickerDialog() {
         final Calendar c = Calendar.getInstance();

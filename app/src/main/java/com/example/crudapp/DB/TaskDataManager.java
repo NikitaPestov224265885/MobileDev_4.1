@@ -100,6 +100,21 @@ public class TaskDataManager {
         return task;
     }
 
+    public void updateTask(int taskId, String title, String description, String dueDate) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TaskContract.TaskEntry.COLUMN_TITLE, title);
+        values.put(TaskContract.TaskEntry.COLUMN_DESCRIPTION, description);
+        values.put(TaskContract.TaskEntry.COLUMN_DUE_DATE, dueDate);
+
+        String selection = TaskContract.TaskEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(taskId) };
+
+        db.update(TaskContract.TaskEntry.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+
 
     // Add methods for updating and deleting tasks as needed...
 }
