@@ -30,6 +30,9 @@ public class AddEditTaskActivity extends AppCompatActivity {
         etDueDate = findViewById(R.id.etTaskDueDate);
         btnSaveTask = findViewById(R.id.btnSaveTask);
 
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
         taskDataManager = new TaskDataManager(this);
 
         // Do not redeclare taskId here; use the class member directly

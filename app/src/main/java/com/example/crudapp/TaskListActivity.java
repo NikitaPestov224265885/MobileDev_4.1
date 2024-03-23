@@ -2,12 +2,12 @@ package com.example.crudapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.crudapp.DB.TaskDataManager;
-import com.example.crudapp.DB.ViewTaskActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class TaskListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private ArrayList<Task> taskList;
-    private FloatingActionButton fabAddTask;
+    private Button fabAddTask;
     private TaskDataManager taskDataManager;
 
     @Override
@@ -57,6 +57,7 @@ public class TaskListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rvTasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
 
         fabAddTask = findViewById(R.id.fabAddTask);
         fabAddTask.setOnClickListener(view -> {

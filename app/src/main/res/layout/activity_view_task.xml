@@ -45,13 +45,16 @@
             android:padding="8dp"
             android:drawablePadding="8dp"/>
 
+
         <Button
-            android:id="@+id/btnEditTask"
-            android:text="Back to list"
+            android:id="@+id/btnBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_marginTop="24dp"/>
-
+            android:text="Back"
+            android:layout_alignParentBottom="true"/>
     </LinearLayout>
+
+
 </ScrollView>
+
+
