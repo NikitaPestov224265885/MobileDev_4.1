@@ -49,15 +49,26 @@ public class TaskDataManager {
                 null);
 
         while(cursor.moveToNext()) {
-            @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TITLE));
-            @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DESCRIPTION));
-            @SuppressLint("Range") String dueDate = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DUE_DATE));
-            tasks.add(new Task(title, description, dueDate));
+            int id = cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry._ID));
+            String title = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TITLE));
+            String description = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DESCRIPTION));
+            String dueDate = cursor.getString(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DUE_DATE));
+            tasks.add(new Task(id, title, description, dueDate));
         }
         cursor.close();
 
         return tasks;
     }
+
+
+    public void deleteTask(int taskId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = TaskContract.TaskEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(taskId) };
+        db.delete(TaskContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
+
 
     // Add methods for updating and deleting tasks as needed...
 }

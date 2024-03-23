@@ -6,17 +6,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.crudapp.DB.TaskDataManager;
+
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList;
     private OnTaskListener onTaskListener;
+    private TaskDataManager taskDataManager;
 
     // Constructor
-    public TaskAdapter(List<Task> taskList, OnTaskListener onTaskListener) {
+    public TaskAdapter(List<Task> taskList, OnTaskListener onTaskListener, TaskDataManager taskDataManager) {
         this.taskList = taskList;
         this.onTaskListener = onTaskListener;
+        this.taskDataManager = taskDataManager;
     }
 
     // Create new views
@@ -34,6 +39,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
         holder.dueDate.setText(task.getDueDate());
+
+        holder.viewButton.setOnClickListener(v -> onTaskListener.onViewClicked(position));
+        holder.editButton.setOnClickListener(v -> onTaskListener.onEditClicked(position));
+        holder.deleteButton.setOnClickListener(v -> onTaskListener.onDeleteClicked(position));
     }
 
     // Return the size of the dataset

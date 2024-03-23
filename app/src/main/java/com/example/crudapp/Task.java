@@ -1,12 +1,14 @@
 package com.example.crudapp;
 
 public class Task {
+    private int id;
     private String title;
     private String description;
     private String dueDate;
 
     // Constructor
-    public Task(String title, String description, String dueDate) {
+    public Task(int id, String title, String description, String dueDate) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -21,4 +23,8 @@ public class Task {
 
     public String getDueDate() { return dueDate; }
     public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+
+    public int getId(){
+        return this.id;
+    }
 }

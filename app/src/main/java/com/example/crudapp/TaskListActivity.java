@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.crudapp.DB.TaskDataManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
@@ -17,44 +16,46 @@ public class TaskListActivity extends AppCompatActivity {
     private TaskAdapter adapter;
     private ArrayList<Task> taskList;
     private FloatingActionButton fabAddTask;
-    private TaskDataManager taskDataManager; // Add this line
+    private TaskDataManager taskDataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        recyclerView = findViewById(R.id.rvTasks);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        taskDataManager = new TaskDataManager(this); // Initialize taskDataManager
+        taskDataManager = new TaskDataManager(this);
         taskList = new ArrayList<>();
 
         adapter = new TaskAdapter(taskList, new TaskAdapter.OnTaskListener() {
             @Override
             public void onViewClicked(int position) {
-                // Implement view logic
+                // Implement view logic, for example, view task details
             }
 
             @Override
             public void onEditClicked(int position) {
-                // Implement edit logic
+                // Implement edit logic, for example, start AddEditTaskActivity with task details
             }
 
             @Override
             public void onDeleteClicked(int position) {
-                // Implement delete logic
+                Task task = taskList.get(position);
+                taskDataManager.deleteTask(task.getId());
+                taskList.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, taskList.size());
             }
-        });
-        recyclerView.setAdapter(adapter); // Set the adapter
+        }, taskDataManager);
+
+
+        recyclerView = findViewById(R.id.rvTasks);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         fabAddTask = findViewById(R.id.fabAddTask);
-        fabAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
-                startActivity(intent);
-            }
+        fabAddTask.setOnClickListener(view -> {
+            Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -70,3 +71,4 @@ public class TaskListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 }
+
