@@ -13,11 +13,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private List<Task> taskList;
     private OnTaskListener onTaskListener;
 
+    // Constructor
     public TaskAdapter(List<Task> taskList, OnTaskListener onTaskListener) {
         this.taskList = taskList;
         this.onTaskListener = onTaskListener;
     }
 
+    // Create new views
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -25,6 +27,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return new TaskViewHolder(itemView, onTaskListener);
     }
 
+    // Replace the contents of a view
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
@@ -33,11 +36,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.dueDate.setText(task.getDueDate());
     }
 
+    // Return the size of the dataset
     @Override
     public int getItemCount() {
         return taskList.size();
     }
 
+    // Provide a reference to the views for each data item
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public TextView title, description, dueDate;
         public Button viewButton, editButton, deleteButton;
