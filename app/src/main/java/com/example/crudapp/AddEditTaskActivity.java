@@ -30,6 +30,17 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
         taskDataManager = new TaskDataManager(this);
 
+        int taskId = getIntent().getIntExtra("TASK_ID", -1);
+        if (taskId != -1) {
+            // Retrieve the task details and populate the fields
+            Task task = taskDataManager.getTask(taskId);
+            if (task != null) {
+                etTitle.setText(task.getTitle());
+                etDescription.setText(task.getDescription());
+                etDueDate.setText(task.getDueDate());
+            }
+        }
+
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

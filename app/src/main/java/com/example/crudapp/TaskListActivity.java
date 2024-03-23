@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.crudapp.DB.TaskDataManager;
+import com.example.crudapp.DB.ViewTaskActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
@@ -27,14 +28,19 @@ public class TaskListActivity extends AppCompatActivity {
         taskList = new ArrayList<>();
 
         adapter = new TaskAdapter(taskList, new TaskAdapter.OnTaskListener() {
-            @Override
             public void onViewClicked(int position) {
-                // Implement view logic, for example, view task details
+                Task task = taskList.get(position);
+                Intent intent = new Intent(TaskListActivity.this, ViewTaskActivity.class);
+                intent.putExtra("TASK_ID", task.getId());
+                startActivity(intent);
             }
 
             @Override
             public void onEditClicked(int position) {
-                // Implement edit logic, for example, start AddEditTaskActivity with task details
+                Task task = taskList.get(position);
+                Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
+                intent.putExtra("TASK_ID", task.getId()); // Pass the ID to edit
+                startActivity(intent);
             }
 
             @Override
